@@ -35,7 +35,9 @@ public class ApiRequestBuilder {
     public void setRequestConfig() {
         PropertyHandler propertyHandler = new PropertyHandler("config.properties");
         RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
-        requestSpecBuilder.setBaseUri("baseUri")
+        String baseUri = propertyHandler.getProperty("baseUri");
+
+        requestSpecification = requestSpecBuilder.setBaseUri(baseUri)
                 .setContentType(ContentType.JSON)
                 .setAccept(ContentType.JSON)
                 .addHeader("Authorization", propertyHandler.getProperty("token"))
@@ -100,9 +102,9 @@ public class ApiRequestBuilder {
             byte[] payload;
             try {
                 reader = new FileReader(filePath);
-                Object object=jsonParser.parse(reader);
-                jsonObject =(JSONObject) object;
-                payload= Files.readAllBytes(Path.of(filePath));
+                Object object = jsonParser.parse(reader);
+                jsonObject = (JSONObject) object;
+                payload = Files.readAllBytes(Path.of(filePath));
                 requestSpecification.body(payload);
             } catch (IOException | ParseException exception) {
                 throw new RuntimeException(exception);
@@ -111,27 +113,27 @@ public class ApiRequestBuilder {
         return jsonObject;
     }
 
-    public <T> void setPostRequest(T clazz,String endPoint){
+    public <T> void setPostRequest(T clazz, String endPoint) {
         setRequestConfig();
         setRequestBody(clazz);
-        execute(Method.POST,endPoint);
+        execute(Method.POST, endPoint);
     }
 
-    public <T> void setRequestWithQueryParam(Map<String,Object> queryParam,String endPoint){
+    public <T> void setRequestWithQueryParam(Map<String, Object> queryParam, String endPoint) {
         setRequestConfig();
         setQueryParams(queryParam);
-        execute(Method.GET,endPoint);
+        execute(Method.GET, endPoint);
     }
 
-    public void getRequestWithPathParam(String pathParam, String endPoit){
+    public void getRequestWithPathParam(String pathParam, String endPoit) {
         setRequestConfig();
         setPathParam(pathParam);
-        execute(Method.GET,endPoit);
+        execute(Method.GET, endPoit);
     }
 
-    public void getRequestWithOutPathParam(String endPoit){
+    public void getRequestWithOutPathParam(String endPoit) {
         setRequestConfig();
-        execute(Method.GET,endPoit);
+        execute(Method.GET, endPoit);
     }
 
     public <T> void setPutRequest(T clazz, String endPoint) {

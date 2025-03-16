@@ -4,8 +4,9 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/test/java/com.api_automation/Features",
-        glue = "com.api_automation/stepdefination"
+        features = "src/test/java/com/api_automation/Features",
+        glue = "com.api_automation.stepdefination",
+        tags = "@CreateCustomer"
         /*plugin = {
                 "pretty",
                 "html:target/cucumber-reports.html",
