@@ -25,12 +25,25 @@ public class ApiRequestBuilder {
     public Response response;
     private String pathParam;
 
-    public static ApiRequestBuilder getInstance() {
+    /*public static ApiRequestBuilder getInstance() {
         if (Objects.isNull(apiRequestBuilder)) {
             apiRequestBuilder = new ApiRequestBuilder();
         }
         return apiRequestBuilder;
+    }*/
+
+    //Thread-Safe
+    public static ApiRequestBuilder getInstance() {
+        if (apiRequestBuilder == null) {
+            synchronized (ApiRequestBuilder.class) {
+                if (apiRequestBuilder == null) {
+                    apiRequestBuilder = new ApiRequestBuilder();
+                }
+            }
+        }
+        return apiRequestBuilder;
     }
+
 
     public void setRequestConfig() {
         PropertyHandler propertyHandler = new PropertyHandler("config.properties");
@@ -61,7 +74,7 @@ public class ApiRequestBuilder {
             case PUT:
                 response = Objects.isNull(pathParam)
                         ? reqSpec.spec(requestSpecification).put(endPoint)
-                        : reqSpec.spec(requestSpecification).patch(endPoint + "/" + "{pathParam}");
+                        : reqSpec.spec(requestSpecification).put(endPoint + "/" + "{pathParam}");
                 break;
             case PATCH:
                 response = Objects.isNull(pathParam)
@@ -74,8 +87,8 @@ public class ApiRequestBuilder {
                         : reqSpec.spec(requestSpecification).delete(endPoint + "/" + "{pathParam}");
                 break;
 
-
         }
+//        pathParam=null;      //Reset after request execution
     }
 
     public void setQueryParams(Map<String, Object> queryParams) {
@@ -94,9 +107,9 @@ public class ApiRequestBuilder {
         Optional.ofNullable(classObject).ifPresent(obj -> requestSpecification.body(obj));
     }
 
-    public JSONObject setRequestBodyWithFile(String filePath) {
+    /*public JSONObject setRequestBodyWithFile(String filePath) {
         JSONObject jsonObject = null;
-        if (Objects.isNull(filePath) && !filePath.isEmpty()) {
+        if (Objects.nonNull(filePath) && !filePath.isEmpty()) {
             JSONParser jsonParser = new JSONParser();
             FileReader reader;
             byte[] payload;
@@ -111,7 +124,22 @@ public class ApiRequestBuilder {
             }
         }
         return jsonObject;
+    }*/
+
+    public JSONObject setRequestBodyWithFile(String filePath) {
+        JSONObject jsonObject = null;
+        if (Objects.nonNull(filePath) && !filePath.isEmpty()) {
+            try {
+                String content = new String(Files.readAllBytes(Path.of(filePath))); // Read JSON file as String
+                jsonObject = new JSONObject(content); // Convert to JSONObject
+                requestSpecification.body(jsonObject.toString()); // Set request body
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return jsonObject;
     }
+
 
     public <T> void setPostRequest(T clazz, String endPoint) {
         setRequestConfig();

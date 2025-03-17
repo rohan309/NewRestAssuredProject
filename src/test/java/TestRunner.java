@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/java/com/api_automation/Features",
         glue = "com.api_automation.stepdefination",
-        tags = "@CreateCustomer"
+        tags = "@CreateCustomerByJson"
         /*plugin = {
                 "pretty",
                 "html:target/cucumber-reports.html",
