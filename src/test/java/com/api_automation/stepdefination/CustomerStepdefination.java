@@ -7,6 +7,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 
+import java.util.List;
+
 public class CustomerStepdefination {
     PropertyHandler propertyHandler = new PropertyHandler("endpoints.properties");
     ApiRequestBuilder apiRequestBuilder = ApiRequestBuilder.getInstance();
@@ -15,7 +17,7 @@ public class CustomerStepdefination {
     @Given("I setup request to create an customer")
     public void setUp() {
         String body = "{\n" +
-                "    \"name\": \"Sample Projects2\",\n" +
+                "    \"name\": \"Sample Projects30\",\n" +
                 "    \"archived\": false\n" +
                 "}";
         String endPoint = propertyHandler.getProperty("customers");
@@ -45,5 +47,17 @@ public class CustomerStepdefination {
         String body = String.valueOf(apiRequestBuilder.setRequestBodyWithFile(filePath));
         String endPoint = propertyHandler.getProperty("customers");
         apiRequestBuilder.setPostRequest(body, endPoint);
+    }
+
+    @Given("I setup request to get all customers")
+    public void iSetupRequestToGetAllCustomers() {
+        apiRequestBuilder.getRequestWithOutPathParam(propertyHandler.getProperty("customers"));
+    }
+
+    @Then("I verify list of  all customers")
+    public void iVerifyListOfAllCustomers() {
+        System.out.println(apiRequestBuilder.response.prettyPrint());
+        List<String> listOfCustomers=apiRequestBuilder.response.jsonPath().getList("items.name");
+//        listOfCustomers.forEach(System.out::println);
     }
 }
