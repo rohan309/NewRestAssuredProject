@@ -31,3 +31,22 @@ Feature: Verify customer functionality
     Then I verify created customer in the list
       | method | statusCode |
       | Get    | 200        |
+
+  @VerifyCustomerInList
+  Scenario Outline: Verify user is able to create multiple customer
+    Given I setup request to create an customer to create multiple customers
+      | name        | <name>        |
+      | archived    | <archived>    |
+      | description | <description> |
+    When I hit an post api to create customers
+      | endPoint   | <endPoint>   |
+      | statusCode | <statusCode> |
+    And I hit an api to get all customers
+      | endPoint   | <endPoint>   |
+      | statusCode | <statusCode> |
+    Then I verify created customer is present in the list of customers
+      | endPoint   | <endPoint>   |
+      | statusCode | <statusCode> |
+    Examples:
+      | name   | archived | description | endPoint  | statusCode |
+      | Random | false    | Random      | customers | 200        |

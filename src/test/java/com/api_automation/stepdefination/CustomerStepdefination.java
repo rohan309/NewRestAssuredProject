@@ -5,6 +5,7 @@ import com.api_automation.config.PropertyHandler;
 import com.api_automation.pojo.CustomerPojo;
 import com.github.javafaker.Faker;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -116,5 +117,52 @@ public class CustomerStepdefination {
         Map<String,String> dataTable=table.asMaps().get(0);
         Assert.assertEquals(apiRequestBuilder.response.statusCode(),Integer.parseInt(dataTable.get("statusCode")));
         apiRequestBuilder.response.prettyPrint();
+    }
+
+    @Given("I setup request to create an customer to create multiple customers")
+    public void iSetupRequestToCreateAnCustomerToCreateMultipleCustomers(Map<String,Object> dataTable) {
+        String name;
+        if(dataTable.get("name").equals("Random")){
+            Faker faker=new Faker();
+            name=faker.company().name();
+        }else {
+            name= (String) dataTable.get("name");
+        }
+        customerPojo=new CustomerPojo();
+        customerPojo.setName(name);
+
+        Boolean archived= Boolean.parseBoolean(dataTable.get("archived").toString());
+        customerPojo.setArchived(archived);
+
+        String description=null;
+        if(dataTable.get("description").equals("Random")){
+            Faker faker=new Faker();
+            description=faker.lorem().sentence();
+        }else {
+            description= (String) dataTable.get("description");
+        }
+        customerPojo.setDescription(description);
+    }
+
+    @When("I hit an post api to create customers")
+    public void iHitAnPostApiToCreateCustomers(Map<String,Object> dataTable) {
+        String endPoint=(String) dataTable.get("endPoint");
+        apiRequestBuilder.setPostRequest(customerPojo,endPoint);
+        int statusCode=Integer.parseInt(dataTable.get("statusCode").toString());
+        Assert.assertEquals(statusCode,apiRequestBuilder.response.statusCode());
+    }
+
+    @And("I hit an api to get all customers")
+    public void iHitAnApiToGetAllCustomers(Map<String,Object> dataTable) {
+        String endPoint=(String) dataTable.get("endPoint");
+        apiRequestBuilder.getRequestWithOutPathParam(endPoint);
+        int statusCode=Integer.parseInt(dataTable.get("statusCode").toString());
+        Assert.assertEquals(statusCode,apiRequestBuilder.response.statusCode());
+    }
+
+    @Then("I verify created customer is present in the list of customers")
+    public void iVerifyCreatedCustomerIsPresentInTheListOfCustomers(Map<String,String> dataTable) {
+        List<String> namesOfCustomers=apiRequestBuilder.response.jsonPath().getList("items.name");
+        Assert.assertTrue(namesOfCustomers.contains(customerPojo.getName()));
     }
 }
