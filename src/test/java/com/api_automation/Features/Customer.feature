@@ -17,3 +17,17 @@ Feature: Verify customer functionality
     Given I setup request to get all customers
     When I hit an api and verify status code 200
     Then I verify list of  all customers
+
+  @CreateCustomerByPojo
+  Scenario: Verify user is able to create a customer using POJO
+    Given I setup request to create an customer by pojo class
+      | name   | archived | description |
+      | Random | false    | Random      |
+
+    When I hit an api and verify status code
+      | method | statusCode |
+      | Post   | 200        |
+
+    Then I verify created customer in the list
+      | method | statusCode |
+      | Get    | 200        |
