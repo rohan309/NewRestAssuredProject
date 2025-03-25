@@ -7,6 +7,5 @@ Feature: Verify task functionality
       | Random | Random      | open   | 16        | 2            | 120           |
     When I hit an api to create task
       | endpoint | tasks |
-
     Then I verify the created task
       | statusCode | 200 |

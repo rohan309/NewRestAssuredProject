@@ -39,20 +39,17 @@ public class CustomerStepdefination {
     @When("I hit an api and verify status code {int}")
     public void iHitAnApiAndVerifyStatusCode(int statusCode) {
         System.out.println("Actual Status Code: " + apiRequestBuilder.response.getStatusCode());
-        System.out.println(apiRequestBuilder.response.jsonPath());
         Assert.assertEquals(statusCode, apiRequestBuilder.response.statusCode());
     }
 
     @Then("I verify in the response")
     public void iVerifyInTheResponse() {
         System.out.println(apiRequestBuilder.response.jsonPath().getString("name"));
-        System.out.println(apiRequestBuilder.response.getBody().toString());
     }
 
     @Given("I setup request to create an customer by json file")
     public void iSetupRequestToCreateAnCustomerByJsonFile() {
         String filePath = "src/main/resources/CreateUser.json";
-
 
         String body = String.valueOf(apiRequestBuilder.setRequestBodyWithFile(filePath));
         String endPoint = propertyHandler.getProperty("customers");
