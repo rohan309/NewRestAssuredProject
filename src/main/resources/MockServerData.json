@@ -1,0 +1,84 @@
+{
+  "aadhar_cards": [
+    {
+      "name": "Rajesh Kumar",
+      "aadhar_number": "1234-5678-9012",
+      "dob": "1985-06-15",
+      "gender": "Male",
+      "address": "123, MG Road, Delhi, India",
+      "mobile": "+91-9876543210"
+    },
+    {
+      "name": "Priya Sharma",
+      "aadhar_number": "2345-6789-0123",
+      "dob": "1992-09-25",
+      "gender": "Female",
+      "address": "56, Park Street, Mumbai, India",
+      "mobile": "+91-8765432109"
+    },
+    {
+      "name": "Amit Verma",
+      "aadhar_number": "3456-7890-1234",
+      "dob": "1988-12-05",
+      "gender": "Male",
+      "address": "78, Anna Nagar, Chennai, India",
+      "mobile": "+91-7654321098"
+    },
+    {
+      "name": "Neha Singh",
+      "aadhar_number": "4567-8901-2345",
+      "dob": "1995-03-18",
+      "gender": "Female",
+      "address": "90, JP Nagar, Bangalore, India",
+      "mobile": "+91-6543210987"
+    },
+    {
+      "name": "Suresh Reddy",
+      "aadhar_number": "5678-9012-3456",
+      "dob": "1979-07-30",
+      "gender": "Male",
+      "address": "12, Banjara Hills, Hyderabad, India",
+      "mobile": "+91-5432109876"
+    },
+    {
+      "name": "Pooja Mehta",
+      "aadhar_number": "6789-0123-4567",
+      "dob": "1990-11-11",
+      "gender": "Female",
+      "address": "34, Salt Lake, Kolkata, India",
+      "mobile": "+91-4321098765"
+    },
+    {
+      "name": "Rohan Desai",
+      "aadhar_number": "7890-1234-5678",
+      "dob": "1982-04-22",
+      "gender": "Male",
+      "address": "67, Karve Road, Pune, India",
+      "mobile": "+91-3210987654"
+    },
+    {
+      "name": "Kavita Joshi",
+      "aadhar_number": "8901-2345-6789",
+      "dob": "1998-08-14",
+      "gender": "Female",
+      "address": "89, Civil Lines, Jaipur, India",
+      "mobile": "+91-2109876543"
+    },
+    {
+      "name": "Arun Nair",
+      "aadhar_number": "9012-3456-7890",
+      "dob": "1975-01-10",
+      "gender": "Male",
+      "address": "45, MG Road, Kochi, India",
+      "mobile": "+91-1098765432"
+    },
+    {
+      "name": "Meena Chatterjee",
+      "aadhar_number": "0123-4567-8901",
+      "dob": "1987-05-29",
+      "gender": "Female",
+      "address": "78, Shyam Bazar, Kolkata, India",
+      "mobile": "+91-0987654321"
+    }
+  ]
+}

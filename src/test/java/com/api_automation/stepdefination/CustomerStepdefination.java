@@ -1,5 +1,6 @@
 package com.api_automation.stepdefination;
 
+import com.api_automation.Hooks;
 import com.api_automation.config.ApiRequestBuilder;
 import com.api_automation.config.PropertyHandler;
 import com.api_automation.pojo.CustomerPojo;
@@ -45,6 +46,10 @@ public class CustomerStepdefination {
     @Then("I verify in the response")
     public void iVerifyInTheResponse() {
         System.out.println(apiRequestBuilder.response.jsonPath().getString("name"));
+        System.out.println("*****************************");
+        System.out.println(Hooks.responseBody);
+        System.out.println("*****************************");
+
     }
 
     @Given("I setup request to create an customer by json file")
