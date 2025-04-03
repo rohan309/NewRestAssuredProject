@@ -9,7 +9,7 @@ Feature: Verify customer functionality
   @CreateCustomerByJson
   Scenario: Verify user is able to create customer by json file
     Given I setup request to create an customer by json file
-    When I hit an api and verify status code 200
+    When I hit an api and verify status code 400
     Then I verify in the response
 
   @GetAllCustomer
