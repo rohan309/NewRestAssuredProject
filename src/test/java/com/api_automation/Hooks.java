@@ -12,37 +12,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Hooks {
-    public static WireMockServer wireMockServer;
-    public static String responseBody;
+
 
     @BeforeAll
     public static void beforeAll() {
         //1. Runs once before All scenarios
         System.out.println("*** Inside BeforeAll hook ***");
 
-        String jsonFilePath = "src/main/resources/MockServerData.json";
-//        responseBody = null;
-        try {
-            responseBody = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
-        if (wireMockServer == null) {
-            PropertyHandler propertyHandler = new PropertyHandler("config.properties");
-            int port = Integer.parseInt(propertyHandler.getProperty("port"));
-            wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().port(port));
-            wireMockServer.start();
-            WireMock.configureFor(port);
-            System.out.println("WireMock server started on port " + port);
-
-            WireMock.stubFor(WireMock.get("/aadhar-data")
-                    .willReturn(WireMock.aResponse()
-                            .withStatus(Integer.parseInt(propertyHandler.getProperty("mockServerStatusCode")))
-                            .withHeader("Content-Type", "application/json")
-                            .withBody(responseBody)));
-
-        }
 
     }
 
@@ -75,10 +52,7 @@ public class Hooks {
     public static void afterAll() {
         //6. Runs once after all scenarios
         System.out.println("*** Inside AfterAll hook ***");
-        if (wireMockServer != null && wireMockServer.isRunning()) {
-            wireMockServer.stop();
-            System.out.println("WireMock server stopped.");
-        }
+
     }
 }
 

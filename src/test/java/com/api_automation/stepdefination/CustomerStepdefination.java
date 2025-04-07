@@ -46,9 +46,7 @@ public class CustomerStepdefination {
     @Then("I verify in the response")
     public void iVerifyInTheResponse() {
         System.out.println(apiRequestBuilder.response.jsonPath().getString("name"));
-        System.out.println("*****************************");
-        System.out.println(Hooks.responseBody);
-        System.out.println("*****************************");
+
 
     }
 
